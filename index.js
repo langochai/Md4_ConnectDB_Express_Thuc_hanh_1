@@ -56,7 +56,25 @@ app.get("/books/:id/delete", (req, res) => {
         if (err) throw err;
         res.redirect('/books')
     });
-})
+});
+app.get("/books/:id/update", (req, res) => {
+    const idBook = req.params.id;
+    const sql = "SELECT * FROM books WHERE id = " + idBook;
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
+        res.render('update', {book: results[0]});
+    });
+});
+app.post("/books/:id/update", (req, res) => {
+    const idBook = req.params.id;
+    const sql = `UPDATE books SET name = ?, price = ?, author = ?, status = ? WHERE id = ?`;
+    const { name, price, status, author } = req.body;
+    const value = [name, price, author, status, idBook];
+    connection.query(sql, value, (err, results) => {
+        if (err) throw err;
+        res.redirect('/books');
+    });
+});
 app.listen(PORT,()=>{
     console.log(`segs at port ${PORT}`)
 });
