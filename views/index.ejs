@@ -51,6 +51,7 @@
                     <th>Price</th>
                     <th>Author</th>
                     <th>Status</th>
+                    <th></th>
                 </tr>
                 <% books.forEach((book, index) => { %>
                     <tr>
@@ -59,8 +60,8 @@
                         <td><%= book.price %></td>
                         <td><%= book.author %></td>
                         <td><%= book.status %></td>
+                        <td><a onclick="return confirm('Are you sure you want to delete this book?')" href="/books/<%= book.id%>/delete" class="btn btn-danger">Delete</a></td>
                     </tr>
-
                 <% })%>
             </table>
         </div>
